@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>游戏结束，谢谢参与！</title>
+    <link rel="shortcut icon" href="bitbug_favicon.ico">
+    <link rel="stylesheet" type="text/css" href="oldstyle0.css" >
+  </head>
+  <body>
+    <section class="center" style="margin-top:50px;font-size:1.5em;">
+    <h3 style="text-align:center;">谢谢参与，游戏结束！</h3>
+      <p style="text-align: center;">
+        <script>
+        //解析ptime作为游玩次数显示
+        var ptimes = window.location.href.split("=")[1];
+        //作为段落显示
+        document.write("您在刚刚一共尝试了 " + ptimes +" 次游戏！")
+      </script>
+    </p>
+    <div class="center">
+      <p style="text-align:center;">在您完成最后一个问卷之后，实验结束，请用手机扫码填写</p>
+      <p style="text-align:center;"><img src="qrcode/q3.png" onclick="location='https://www.wjx.cn/jq/21536079.aspx'"></img></p>
+    </div>
+    <p  style="text-align:center;font-size:2em;"><a href="welcome.html" style=" font-weight:bold; color:white;">返回首页</a></p>
+  </section>
+  </body>
+</html>

@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+<head>
+<title>排行页</title>
+<meta http-equiv="content-type" content="text/html;" charset="utf-8"/>
+<link rel="shortcut icon" href="bitbug_favicon.ico">
+<link rel="stylesheet" type="text/css" href="oldstyle0.css" />
+<script src="js/jquery-3.2.1.js"></script>
+</head>
+
+<body>
+
+<section class="center" style="margin-top:40px;">
+  <img src="logo.png" style="float:left;padding-left:20px;" width=80px; height=80px;/>
+  <h1> 玩家排行榜</h1>
+  <hr style="clear:both;"/>
+<div style="display:none;">
+<table class="center" style="text-align: center">
+ <tr>
+  <th>名次</th><th>昵称</th><th>得分</th>
+ </tr>
+<script>
+  /*
+  从url解析pid，pname，ppoints
+  file:///C:/Apache24/htdocs/leader3/cal.html?pid=1222&pname=daws&ppoints=1234&orip=1234&histp=1234
+  */
+  var spid = window.location.href.split("=")[1]; //1&pname
+  var spname = window.location.href.split("=")[2]; //jac&ppoints
+  var spp = window.location.href.split("=")[3];  //1223$orip
+  var orip = window.location.href.split("=")[4]; //1221&randnum
+  var histp = window.location.href.split("=")[5];
+  var pname = spname.split("&")[0]; //"jac"
+  var pid = parseInt(spid, 10);     //1
+  var newppoints = parseInt(histp, 10);  //1223
+  var ppoints = parseInt(orip, 10);  //1223
+  var bnames = ["liuyi","Dream","coolgirl","zihan"];
+  var names = ["Liziyang", "Piggy", "Xiaozhang", "Jack Ma", "guy", "Sicheng","giant","luffy","Oni","dalao","hanghang","sweet12","Bee","Xiaohua","Jim","Hank","liuyi","Dream","coolgirl","zihan","yeyi"];
+  var randp1 = [25,16,-21,-3,-2,-13,-29,-2,-3,-15,-12,-21,-3,-11,-24,-4,-5,-9,-21,-2,-8];
+  var randp2 = [2823,2790,2765,2653,2222,1819,1515,992,376,255,-12,-30,-53,-119,-123,-145,-152,-159,-161,-177,-195];
+  var randp3 = [3398,3052,2988,2955,2753,2549,2433,1830,1812,1776,1412,1392,1384,1277,1275,657,452,233,225,-17,-23,-49];
+  var i=0;
+  //r作为排名次序
+  var r = 0;
+  //ap用于滚动在玩家之前或之后排名的人数
+  var ap = pid % 3;
+
+  //4种排行榜的switch,根据除4的余数不同分为余数为0、1、2、3的4种情况
+  var n = pid % 4;
+  switch (n) {
+    case 0: //排在最前面
+      for (i=ap; i<names.length-1; i++)
+      {
+          r++;
+          ppoints=ppoints+randp1[i];
+          if(newppoints>ppoints && i==ap)
+          {
+            document.write("<tr class='thick'><td>" + r + "</td><td>" + pname + "</td><td>" + newppoints + "</td></tr>");
+            r++;
+            if(ppoints<41){ppoints=41;}
+            document.write("<tr><td>"+ r + "</td><td>" + names[i] + "</td><td>" + ppoints + "</td></tr>");
+          }
+          else
+          {
+            if(newppoints<ppoints && newppoints>ppoints+randp1[i+1])
+            {
+              document.write("<tr><td>"+ r + "</td><td>" + names[i] + "</td><td>" + ppoints + "</td></tr>");
+              r++;
+              document.write("<tr class='thick'><td>" + r + "</td><td>" + pname + "</td><td>" + newppoints + "</td></tr>");
+            }
+            else
+            if(newppoints<ppoints+randp1[i+1] && i==names.length-2)
+            {
+              document.write("<tr><td>"+ r + "</td><td>" + names[i] + "</td><td>" + ppoints + "</td></tr>");
+              r++;
+              document.write("<tr class='thick'><td>" + r + "</td><td>" + pname + "</td><td>" + newppoints + "</td></tr>");
+            }
+            else
+            {
+              if(ppoints<41){ppoints=41;}
+              document.write("<tr><td>"+ r + "</td><td>" + names[i] + "</td><td>" + ppoints + "</td></tr>");
+            }
+          }
+        }
+        break;
+        case 1: //排在最后面
+          for(i=0; i<names.length-ap; i++)
+           {
+            r++;
+            pp=ppoints+randp3[i];
+            if(newppoints>pp && i==0)
+            {
+              document.write("<tr class='thick'><td>" + r + "</td><td>" + pname + "</td><td>" + newppoints + "</td></tr>");
+              r++;
+              if(pp<41){pp=41;}
+              document.write("<tr><td>"+ r + "</td><td>" + names[i] + "</td><td>" + pp + "</td></tr>");
+            }
+            else
+            {
+              if(newppoints<pp && newppoints>ppoints+randp3[i+1])
+              {
+                document.write("<tr><td>"+ r + "</td><td>" + names[i] + "</td><td>" + pp + "</td></tr>");
+                r++;
+                document.write("<tr class='thick'><td>" + r + "</td><td>" + pname + "</td><td>" + newppoints + "</td></tr>");
+              }
+              else
+              {
+                if(newppoints<ppoints+randp3[i+1] && i==names.length-ap-1)
+                {
+                  document.write("<tr><td>"+ r + "</td><td>" + names[i] + "</td><td>" + pp + "</td></tr>");
+                  r++;
+                  document.write("<tr class='thick'><td>" + r + "</td><td>" + pname + "</td><td>" + newppoints + "</td></tr>");
+                }
+                else
+                {
+                  if(pp<41){pp=41;}
+                  document.write("<tr><td>"+ r + "</td><td>" + names[i] + "</td><td>" + pp + "</td></tr>");
+                }
+              }
+            }
+          }
+          break;
+
+        case 2: //排在中间
+        for(i=ap; i<names.length-1; i++)
+         {
+          r++;
+          pp=ppoints+randp2[i];
+          if(newppoints>pp && i==ap)
+          {
+            document.write("<tr class='thick'><td>" + r + "</td><td>" + pname + "</td><td>" + newppoints + "</td></tr>");
+            r++;
+            if(pp<41){pp=41;}
+            document.write("<tr><td>"+ r + "</td><td>" + names[i] + "</td><td>" + pp + "</td></tr>");
+          }
+          else
+          {
+            if(newppoints<pp && newppoints>ppoints+randp2[i+1])
+            {
+              document.write("<tr><td>"+ r + "</td><td>" + names[i] + "</td><td>" + pp + "</td></tr>");
+              r++;
+              document.write("<tr class='thick'><td>" + r + "</td><td>" + pname + "</td><td>" + newppoints + "</td></tr>");
+            }
+            else
+            {
+              if(newppoints<ppoints+randp2[i+1] && i==names.length-2)
+              {
+                document.write("<tr><td>"+ r + "</td><td>" + names[i] + "</td><td>" + pp + "</td></tr>");
+                r++;
+                document.write("<tr class='thick'><td>" + r + "</td><td>" + pname + "</td><td>" + newppoints + "</td></tr>");
+              }
+              else
+              {
+                if(pp<41){pp=41;}
+                document.write("<tr><td>"+ r + "</td><td>" + names[i] + "</td><td>" + pp + "</td></tr>");
+              }
+            }
+          }
+        }
+        break;
+
+        case 3://空白排行
+          document.write("<tr class='thick'><td>"+ 1 + "</td><td>" + pname + "</td><td>" + newppoints + "</td></tr>");
+        for(i=0; i<names.length; i++)
+            {
+            document.write("<tr style='text-decoration: underline;'><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>");
+            }
+          break;
+
+        default:
+          document.write("<tr class='thick'><td>"+ 1 + "</td><td>" + pname + "</td><td>" + newppoints + "</td></tr>");
+        for(i=0; i<names.length; i++)
+            {
+            document.write("<tr style='text-decoration: underline;'><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td><td>&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>");
+            }
+        break;
+        }
+</script>
+</table>
+</div>
+<script src="js/timecount.js"></script>
+<hr />
+<p style="text-align:center;" id="makesure">
+  <a href="#" onclick="javascript: history.go(-1);" style="font-weight:bold;color:white;">再试一次！</a>
+  <form class="center" id="finishgame" action="finiweb.html">
+    <input type="text" id="ptm" name="ptimes" style="display:none;">
+    <input <input type="submit" id="finishgame" value="结束游戏" class="subs">
+  </form>
+</p>
+<p style="text-align:center;">最终解释权归实验员所有</p>
+</section>
+
+<script>
+$(document).ready(function(){
+  $("div").slideDown(2000);
+})
+</script>
+
+</body>
+</html>

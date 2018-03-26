@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+<head>
+<title>欢迎参加排位赛</title>
+<meta charset="utf-8">
+<link rel="shortcut icon" href="bitbug_favicon.ico">
+<link rel="stylesheet" type="text/css" href="oldstyle0.css" >
+<script src="js/checkinput.js"></script>
+<script src="js/localst.js"></script>
+</head>
+
+<body>
+
+<section class="center" style="margin-top:40px;">
+  <div style="float:left;width:400px;">
+  <img src="logo.png" style="float:left;padding-left:20px;" width=80px; height=80px;/>
+  <h1>欢迎参加排位赛！</h1>
+</div>
+  <ul style="float:right;">
+    <li>为了保证测试数据有效，请填写真实数据</li>
+    <li>请在每一次游戏结束后都把分数提交到排行榜</li>
+    <li>否则我们无法统计游戏次数</li>
+    <li>每个ID保留最高分，你可以多次尝试！</li>
+  </ul>
+  <br /><br /><hr style="clear:both;" />
+  <h3 class="center" >请输入</h3>
+  <form class="center" id="upup" action="cal.html" onsubmit="return validate_form(this)" method="get">
+  <p>编号:</p>
+  <input class="center" type="text" id="pid" name="pid" style="width:100%;">
+  <p>昵称（仅支持英文）:</p>
+  <input type="text" id="pname" name="pname" style="width:100%;">
+  <p>得分:</p>
+  <input type="text" id="ppoints"name="ppoints" style="width:100%;">
+  <input type="text" id="ori" name="orip" style="display:none;" value="0">
+  <input type="text" id="hip" name="histp" style="display:none;" value="0">
+  <br /><br /><br />
+  <input type="submit" id="subbut" value="提交" class="subs">
+  </form>
+  <br /><br />
+  <p style="text-align:center;">最终解释权归实验员所有</p>
+</section>
+</body>
+
+</html>
